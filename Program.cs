@@ -11,9 +11,36 @@ namespace lab_4_lection
         /// <param name="message"> сообщение при вводе </param>
         /// <returns></returns>
 
+        static int ZeroAndPositiveIntegerInput(string message)
+        {
+            bool isCorrect = false;
+            int answer = 0;
+            do
+            {
+                Console.WriteLine(message);
+                try
+                {
+                    answer = int.Parse(Console.ReadLine());
+                    if (answer >= 0)
+                    {
+                        isCorrect = true;
+                    } else
+                    {
+                        Console.WriteLine("Введите число, большее или равное 0");
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Введите целое число");
+                    isCorrect = false;
+                }
+            } while (!isCorrect);
+
+            return answer;
+        }
         static int IntegerInput(string message)
         {
-            bool isCorrect;
+            bool isCorrect = false;
             int answer = 0;
             do
             {
@@ -39,13 +66,13 @@ namespace lab_4_lection
             int[] arr = null;
             bool isCorrect;
             int len;
-            int answer = IntegerInput("1. ДСЧ\n2. Ручной ввод");
+            int answer = ZeroAndPositiveIntegerInput("1. ДСЧ\n2. Ручной ввод");
 
             switch (answer)
             {
                 // 1. ДСЧ
                 case 1:
-                    len = IntegerInput("Сколько элементов?");
+                    len = ZeroAndPositiveIntegerInput("Сколько элементов?");
 
                     arr = new int[len];
 
@@ -57,7 +84,7 @@ namespace lab_4_lection
                     break;
                 // 2.Ручной ввод
                 case 2:
-                    len = IntegerInput("Сколько элементов?");
+                    len = ZeroAndPositiveIntegerInput("Сколько элементов?");
 
                     arr = new int[len];
                     for (int i = 0; i < len; i++)
@@ -98,7 +125,6 @@ namespace lab_4_lection
             {
                 return arr;
             }
-            // удаляются эл-ты с индексами 1, 3, 5, 7..., так как им соответсвуют номера 2, 4, 6, 8...
             int toDelete = (arr.Length + 1) / 2;
             int[] resultArray = new int[toDelete];
             // 0 1 2 3 4
@@ -113,13 +139,15 @@ namespace lab_4_lection
                 }
             }
 
+            PrintArray(resultArray);
+
             return resultArray;
         }
 
         // arr может быть и пустым
         static int[] AddKElementsToTheEnd(int[] arr)
         {
-            int k = IntegerInput("Введите кол-во элементов, которое хотите добавить: ");
+            int k = ZeroAndPositiveIntegerInput("Введите кол-во элементов, которое хотите добавить: ");
 
             // копируем исходный массив в конечный
             int[] resultArr = new int[arr.Length + k];
@@ -201,6 +229,8 @@ namespace lab_4_lection
                 Console.WriteLine("Последовательность монотонна");
             }
 
+            PrintArray(resultArray);
+
             return resultArray;
         }
 
@@ -241,6 +271,9 @@ namespace lab_4_lection
                 }
                 arr[j + 1] = el;
             }
+            Console.WriteLine("Массив отсортирован: ");
+            PrintArray(arr);
+
             return arr;
         }
 
@@ -287,7 +320,7 @@ namespace lab_4_lection
 
             // сначала отсортировать массив
             arr = InsertionSort(arr);
-            int numberToFind = IntegerInput("Какое число нужно найти?");
+            int numberToFind = ZeroAndPositiveIntegerInput("Какое число нужно найти?");
             BinarySearchResult found = BinarySearch(arr, numberToFind, 0, arr.Length - 1);
 
             Console.Write("Массив: ");
@@ -308,10 +341,11 @@ namespace lab_4_lection
             int[] arr = [];
             do
             {
-                answer = IntegerInput("1. Создать массив\n2. Печать массива\n3. Удалить элементы с четными номерами\n4. Добавить k элементов в массив\n5. Поменять местами минимальный и максимальный элементы\n6. Найти первый отрицательный элемент\n7. Сортировка методом простого включения\n8. Найти элемент в отсортированном массиве\n0. Выход\nВведите, чтобы выбрать:");
+                answer = ZeroAndPositiveIntegerInput("1. Создать массив\n2. Печать массива\n3. Удалить элементы с четными номерами\n4. Добавить k элементов в массив\n5. Поменять местами минимальный и максимальный элементы\n6. Найти первый отрицательный элемент\n7. Сортировка методом простого включения\n8. Найти элемент в отсортированном массиве\n0. Выход\nВведите, чтобы выбрать:");
 
                 switch (answer)
                 {
+                    
                     case 1:
                         arr = CreateArray();
                         break;
